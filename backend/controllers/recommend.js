@@ -1,4 +1,6 @@
 const axios = require("axios").default
+const mongoose = require("mongoose")
+const Recommend = require("../models/recommend")
 
 const createReco = async (req, res) => {
 
@@ -44,4 +46,45 @@ const createReco = async (req, res) => {
     }
 }
 
-module.exports = { createReco }
+const saveReco = async (req, res) => {
+  const { recommendation } = req.body
+
+  try {
+    const reco = await Recommend.create({ recommendation })
+    res.status(200).json(reco)
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+}
+
+const getAllReco = async (req, res) => {
+  try {
+    const recommendations = await Recommend.find({})
+
+    res.status(200).json(recommendations)
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+}
+
+const getSingleReco = async (req, res) => {
+  try {
+      const { id } = req.params
+
+      if(!mongoose.Types.ObjectId.isValid(id)){
+          return res.status(404).json({error: `No recommendation with ID of ${id}`})
+      }
+
+      const reco = await Recommend.findById(id)
+
+      if(!reco) {
+          return res.status(400).json({error: "Recommendation does not exist"})
+      }
+
+      res.status(200).json(reco)
+  } catch (error) {
+      res.status(400).json({error: error.message})
+  }
+}
+
+module.exports = { createReco, saveReco, getAllReco, getSingleReco }
