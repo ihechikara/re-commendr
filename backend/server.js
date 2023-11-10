@@ -4,11 +4,13 @@ require("dotenv").config()
 const mongoose = require("mongoose")
 
 const recoRoutes = require("./routes/recommend")
+const userRoutes = require("./routes/user")
 
 const app = express()
 
 app.use(express.json())
 app.use("/api/recommend", recoRoutes)
+app.use("/api/user", userRoutes)
 
 mongoose.connect(process.env.MONGO_CONNECT)
     .then(() => {
