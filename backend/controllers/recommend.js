@@ -50,7 +50,8 @@ const saveReco = async (req, res) => {
   const { recommendation } = req.body
 
   try {
-    const reco = await Recommend.create({ recommendation })
+    const user_id = req.user._id
+    const reco = await Recommend.create({ recommendation, user_id })
     res.status(200).json(reco)
   } catch (error) {
     res.status(400).json({error: error.message})
@@ -58,8 +59,9 @@ const saveReco = async (req, res) => {
 }
 
 const getAllReco = async (req, res) => {
+  const user_id = req.user.id
   try {
-    const recommendations = await Recommend.find({})
+    const recommendations = await Recommend.find({user_id})
 
     res.status(200).json(recommendations)
   } catch (error) {
