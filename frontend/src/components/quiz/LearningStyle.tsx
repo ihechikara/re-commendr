@@ -1,15 +1,11 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { Box, Typography } from "@mui/material";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Chip from "@mui/material/Chip";
 import Button from "@mui/material/Button";
 import { RecommendrAssesmentContext } from "../../AssessmentContext";
-
-const learningContent = ["Self-Paced Learning", "Structured Courses"];
 
 const learningStyle = [
   "Video tutorials",
@@ -18,27 +14,23 @@ const learningStyle = [
   "Books and articles",
 ];
 
-const MenuProps = {
-  PaperProps: {
-    style: {
-      // maxHeight: "400px",
-      width: "646px",
-    },
-  },
-};
-
 const LearningStyle = () => {
   const quizContext = useContext(RecommendrAssesmentContext);
-  const [learningContent, setLearningContent] = useState<string[]>([]);
-  const [learningPace, setLearningPace] = useState<string | null>(null);
+  const [learningContent, setLearningContent] = useState<string[]>(
+    quizContext?.userData?.learningContent || []
+  );
+  const [learningPace, setLearningPace] = useState<string | null>(
+    quizContext?.userData?.learningPace || null
+  );
 
   const handleLearningPaceChange = (event: SelectChangeEvent<string>) => {
     const selectedValue = event.target.value;
     setLearningPace(selectedValue);
-    quizContext?.setUserData((prevUserData: any) => ({
-      ...prevUserData,
+
+    quizContext?.setUserData({
+      ...quizContext?.userData,
       learningPace: selectedValue,
-    }));
+    });
   };
 
   const handleButtonClick = (objective: string) => {
@@ -50,10 +42,11 @@ const LearningStyle = () => {
 
     quizContext?.setUserData((prevUserData: any) => ({
       ...prevUserData,
-      learningContent: learningContent,
+      learningContent: learningContent.includes(objective)
+        ? learningContent.filter((obj) => obj !== objective)
+        : [...learningContent, objective],
     }));
   };
-
   return (
     <Box
       sx={{
@@ -118,6 +111,7 @@ const LearningStyle = () => {
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           label="Age"
+          value={learningPace || ""}
           onChange={handleLearningPaceChange}
         >
           <MenuItem value={"Self-Paced Learning"}>Self-Paced Learning</MenuItem>
@@ -163,7 +157,7 @@ const LearningStyle = () => {
                 color: "#30292F",
                 borderRadius: "50px",
                 backgroundColor: learningContent.includes(i)
-                  ? "black"
+                  ? "#817a81"
                   : "#D7CFD6",
                 textTransform: "capitalize",
                 fontSize: "16px",

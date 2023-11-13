@@ -1,8 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext,useState } from "react";
 import {
-  Autocomplete,
   Box,
-  TextField,
   Typography,
   Button,
 } from "@mui/material";
@@ -25,7 +23,9 @@ const learningObj = [
 
 const LearningObjectives = () => {
   const quizContext = useContext(RecommendrAssesmentContext);
-  const [selectedObjectives, setSelectedObjectives] = useState<string[]>([]);
+  const [selectedObjectives, setSelectedObjectives] = useState<string[]>(
+    quizContext?.userData?.learningObjectives || []
+  );
 
   const handleButtonClick = (objective: string) => {
     setSelectedObjectives((prevObjectives) =>
@@ -34,21 +34,13 @@ const LearningObjectives = () => {
         : [...prevObjectives, objective]
     );
 
-    quizContext?.setUserData((prevUserData: any) => ({
-      ...prevUserData,
-      learningObjectives: selectedObjectives,
-    }));
+    quizContext?.setUserData({
+      ...quizContext?.userData,
+      learningObjectives: selectedObjectives.includes(objective)
+        ? selectedObjectives.filter((obj) => obj !== objective)
+        : [...selectedObjectives, objective],
+    });
   };
-
-  console.log(selectedObjectives, "selected objective");
-  console.log(quizContext?.userData, "user data");
-
-  // useEffect(() => {
-  //   quizContext?.setUserData({
-  //     ...quizContext?.userData,
-  //     learningObjectives: selectedObjectives,
-  //   });
-  // }, [selectedObjectives]);
 
   return (
     <Box
@@ -106,7 +98,7 @@ const LearningObjectives = () => {
                 style={{
                   padding: "12px 16px",
                   backgroundColor: selectedObjectives.includes(i)
-                    ? "black"
+                    ? "#817a81"
                     : "#D7CFD6",
                   color: "#30292F",
                   borderRadius: "50px",

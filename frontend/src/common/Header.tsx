@@ -1,14 +1,22 @@
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import logo from "../images/re-commendr.svg";
+import { useState } from "react";
+import HowItWorks from "../components/HowItWorks";
 
 const LinkStyles = {
   padding: "12px 24px",
   color: "#30292F",
   textDecoration: "none",
+  cursor: "pointer",
 };
 
 const Header = () => {
+  const [show, setShow] = useState(false);
+
+  const onShow = () => {
+    setShow(true);
+  };
   return (
     <Box
       sx={{
@@ -31,9 +39,10 @@ const Header = () => {
         <Link to="/" style={LinkStyles}>
           Home
         </Link>
-        <Link to="/" style={LinkStyles}>
+        <a style={LinkStyles} onClick={onShow}>
           How it works
-        </Link>
+        </a>
+        {show && <HowItWorks setShow={setShow} />}
         <Link to="/disclaimer" style={LinkStyles}>
           Start recommender
         </Link>

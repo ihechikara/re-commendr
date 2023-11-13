@@ -17,9 +17,15 @@ const TechnicalAssessmentQuiz = () => {
   if (quizContext) {
     console.log(quizContext.userData, "user data");
   }
-  const [algorithmicThinking, setAlgorithmicThinking] = useState("");
-  const [logicalThinking, setLogicalThinking] = useState("");
-  const [mathematicalReasoning, setMathematicalReasoning] = useState("");
+  const [algorithmicThinking, setAlgorithmicThinking] = useState<string>(
+    quizContext?.userData?.algorithmicThinking || ""
+  );
+  const [logicalThinking, setLogicalThinking] = useState<string>(
+    quizContext?.userData?.logicalThinking || ""
+  );
+  const [mathematicalReasoning, setMathematicalReasoning] = useState<string>(
+    quizContext?.userData?.mathematicalReasoning || ""
+  );
 
   return (
     <Box
@@ -86,7 +92,7 @@ const TechnicalAssessmentQuiz = () => {
               flexDirection: "row",
               gap: "80px",
             }}
-            value={quizContext?.userData["algorithmicThinking"]}
+            value={algorithmicThinking}
             onChange={(e) => {
               setAlgorithmicThinking(e.target.value);
               quizContext?.setUserData({
@@ -209,7 +215,7 @@ const TechnicalAssessmentQuiz = () => {
               flexDirection: "row",
               gap: "80px",
             }}
-            value={quizContext?.userData["logicalThinking"]}
+            value={logicalThinking}
             onChange={(e) => {
               setLogicalThinking(e.target.value);
               quizContext?.setUserData({
@@ -331,7 +337,7 @@ const TechnicalAssessmentQuiz = () => {
               flexDirection: "row",
               gap: "80px",
             }}
-            value={quizContext?.userData["mathematicalReasoning"]}
+            value={mathematicalReasoning}
             onChange={(e) => {
               setMathematicalReasoning(e.target.value);
               quizContext?.setUserData({

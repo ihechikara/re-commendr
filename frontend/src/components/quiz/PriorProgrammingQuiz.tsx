@@ -28,7 +28,8 @@ const languages = [
 const PriorProgrammingQuiz = () => {
   const quizContext = useContext(RecommendrAssesmentContext);
   const [programmingExperienceLevel, setProgrammingExperienceLevel] =
-    useState("");
+    useState<string>(quizContext?.userData?.programmingExperienceLevel || "");
+
   const [programmingLanguages, setProgrammingLanguages] = useState<
     { language: string }[]
   >([]);
@@ -36,6 +37,15 @@ const PriorProgrammingQuiz = () => {
   if (quizContext) {
     console.log(quizContext.userData, "user data");
   }
+
+  useEffect(() => {
+    if (quizContext?.userData?.programmingLanguages) {
+      const selectedLanguages = languages.filter((language) =>
+        quizContext?.userData?.programmingLanguages.includes(language.language)
+      );
+      setProgrammingLanguages(selectedLanguages);
+    }
+  }, [languages]);
   return (
     <Box
       sx={{
@@ -101,7 +111,7 @@ const PriorProgrammingQuiz = () => {
                 flexDirection: "row",
                 gap: "80px",
               }}
-              value={quizContext?.userData["programmingExperienceLevel"]}
+              value={programmingExperienceLevel}
               onChange={(e) => {
                 setProgrammingExperienceLevel(e.target.value);
                 quizContext?.setUserData({
@@ -201,6 +211,7 @@ const PriorProgrammingQuiz = () => {
           options={languages}
           disableCloseOnSelect
           getOptionLabel={(option) => option.language}
+          value={programmingLanguages}
           onChange={(event, values) => {
             setProgrammingLanguages(values);
             quizContext?.setUserData({

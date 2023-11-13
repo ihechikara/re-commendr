@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import {
   Autocomplete,
   Box,
@@ -6,12 +6,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Chip from "@mui/material/Chip";
 import Button from "@mui/material/Button";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
@@ -32,18 +27,17 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const InterestQuiz = () => {
   const quizContext = useContext(RecommendrAssesmentContext);
-  const [personName, setPersonName] = useState<string[]>([]);
   const [domain, setDomain] = useState<{ domain: string }[]>([]);
 
-  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
+  useEffect(() => {
+    if (quizContext?.userData?.domain) {
+      const selectedDomains = programmingDomains.filter((domain) =>
+        quizContext?.userData?.domain.includes(domain.domain)
+      );
+      setDomain(selectedDomains);
+    }
+  }, [programmingDomains]);
+
   return (
     <Box
       sx={{
@@ -107,6 +101,7 @@ const InterestQuiz = () => {
           options={programmingDomains}
           disableCloseOnSelect
           getOptionLabel={(option) => option.domain}
+          value={domain}
           onChange={(event, values) => {
             setDomain(values);
             quizContext?.setUserData({

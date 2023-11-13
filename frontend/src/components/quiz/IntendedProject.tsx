@@ -57,6 +57,7 @@ const IntendedProject = () => {
             fullWidth
             label="Ex: A scheduling app for cafeteria meals"
             id="fullWidth"
+            value={quizContext?.userData["intendedProject"]}
             onChange={(e) =>
               quizContext?.setUserData({
                 ...quizContext.userData,

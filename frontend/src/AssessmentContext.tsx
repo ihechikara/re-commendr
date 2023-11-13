@@ -1,5 +1,5 @@
 // AssessmentContext.js
-import React, { createContext, useState, ReactNode } from "react";
+import React, { useEffect, useState, ReactNode } from "react";
 
 export interface IRecommendrAssesmentContext {
   userData: any;
@@ -25,11 +25,49 @@ export const RecommendrAssesmentProvider = ({
   const [finalData, setFinalData] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const submitData = () => {
+  useEffect(() => {
+    const savedUserData = localStorage.getItem("userData");
+    const savedCurrentPage = localStorage.getItem("currentPage");
+
+    if (savedUserData) {
+      setUserData(JSON.parse(savedUserData));
+    }
+
+    if (savedCurrentPage) {
+      setCurrentPage(JSON.parse(savedCurrentPage));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("userData", JSON.stringify(userData));
+    localStorage.setItem("currentPage", JSON.stringify(currentPage));
+  }, [userData, currentPage]);
+
+  const submitData = async () => {
     setFinalData((finalData: any) => [...finalData, userData]);
     console.log(finalData, userData);
-    // setUserData("");
+    try {
+      const response = await fetch("http://localhost:3000/createReco", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+      const responseData = await response.json();
+      console.log(responseData);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
+    localStorage.removeItem("userData");
+    localStorage.removeItem("finalData");
+    localStorage.removeItem("currentPage");
+    setUserData([]);
+    setCurrentPage(0);
   };
+
+  // Call the function to make the POST request
 
   return (
     <RecommendrAssesmentContext.Provider

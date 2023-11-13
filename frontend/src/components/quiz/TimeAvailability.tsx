@@ -13,8 +13,9 @@ import { RecommendrAssesmentContext } from "../../AssessmentContext";
 
 const TimeAvailability = () => {
   const quizContext = useContext(RecommendrAssesmentContext);
-  const [availability, setAvailability] = useState("");
-  const generateRecommendation = () => {};
+  const [availability, setAvailability] = useState<string>(
+    quizContext?.userData?.availability || ""
+  );
   return (
     <Box
       sx={{
@@ -56,19 +57,18 @@ const TimeAvailability = () => {
         <FormControl>
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="5 - 10 hrs/Week"
             name="radio-buttons-group"
             sx={{
               display: "flex",
               flexDirection: "row",
               gap: "80px",
             }}
-            value={quizContext?.userData["timeAvailability"]}
+            value={availability}
             onChange={(e) => {
               setAvailability(e.target.value);
               quizContext?.setUserData({
                 ...quizContext?.userData,
-                timeAvailability: e.target.value,
+                availability: e.target.value,
               });
             }}
           >
