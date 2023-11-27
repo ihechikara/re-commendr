@@ -1,16 +1,9 @@
 import { Box, Button, Typography } from "@mui/material";
-import Header from "../common/Header";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  const [start, setStart] = useState(false);
-  const startRecommedrHandler = () => {
-    setStart(true);
-  };
   return (
     <Box sx={{ height: "calc(100vh - 90px)", width: "100vw" }}>
-      <Header />
       <Box
         sx={{
           mt: "120px",

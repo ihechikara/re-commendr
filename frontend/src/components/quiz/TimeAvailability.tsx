@@ -3,19 +3,25 @@ import {
   Box,
   FormControl,
   FormControlLabel,
-  FormLabel,
   Radio,
   RadioGroup,
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import { RecommendrAssesmentContext } from "../../AssessmentContext";
+import { useNavigate } from "react-router-dom";
 
 const TimeAvailability = () => {
+  const navigate = useNavigate();
   const quizContext = useContext(RecommendrAssesmentContext);
   const [availability, setAvailability] = useState<string>(
     quizContext?.userData?.availability || ""
   );
+
+  const handleSubmit = () => {
+    quizContext?.submitData();
+    navigate("/recommendation");
+  };
   return (
     <Box
       sx={{
@@ -148,7 +154,7 @@ const TimeAvailability = () => {
             fontWeight: "400",
             lineHeight: "30px",
           }}
-          onClick={quizContext?.submitData}
+          onClick={handleSubmit}
         >
           Generate recommendation
         </Button>
