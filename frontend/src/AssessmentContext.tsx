@@ -26,36 +26,19 @@ export const RecommendrAssesmentProvider = ({
   const [currentPage, setCurrentPage] = useState(0);
 
   const user_text = {
-    user_text: `Generate a detailed learning roadmap for a user with ${userData.algorithmicThinking} algorithmic thinking, ${userData.logicalThinking} logical thinking, and ${userData.mathematicalReasoning} mathematical reasoning, and is a ${userData.programmingExperienceLevel} to programming. The user wants to learn ${userData.programmingLanguages} with these learning objectives: ${userData.learningObjectives}. The user intends to learn with ${userData.learningPace} and prefers ${userData.learningContent}, and intends to build a ${userData.intendedProject}. The user’s availability to learn ${userData.availability}. Add some learning resources as well to the roadmap`,
+    user_text: `Generate a detailed learning roadmap for a user with ${userData.algorithmicThinking} algorithmic thinking, ${userData.logicalThinking} logical thinking, and ${userData.mathematicalReasoning} mathematical reasoning, and is a ${userData.programmingExperienceLevel} to programming. The user wants to learn ${userData.programmingLanguages} with these learning objectives: ${userData.learningObjectives}. The user intends to learn with ${userData.learningPace} and prefers ${userData.learningContent}, and intends to build a ${userData.intendedProject}. The user’s availability to learn ${userData.availability}.`,
   };
 
-  // useEffect(() => {
-  //   const savedUserData = localStorage.getItem("userData");
-  //   const savedCurrentPage = localStorage.getItem("currentPage");
-
-  //   if (savedUserData) {
-  //     setUserData(JSON.parse(savedUserData));
-  //   }
-
-  //   if (savedCurrentPage) {
-  //     setCurrentPage(JSON.parse(savedCurrentPage));
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   localStorage.setItem("userData", JSON.stringify(userData));
-  //   localStorage.setItem("currentPage", JSON.stringify(currentPage));
-  // }, [userData, currentPage]);
 
   const submitData = async () => {
     // setFinalData((finalData: any) => [...finalData, userData]);
     console.log(user_text, userData);
     try {
-      const response = await fetch("http://localhost:3000/createReco", {
+      const response = await fetch("http://localhost:3000/api/recommend/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTRlMTFkNTdlNGQzMTQ0MGQxMjkzOTMiLCJpYXQiOjE2OTk5MDA1MjMsImV4cCI6MTcwMDE1OTcyM30.L11rP2ek68ifdSANIJcX8ZjLfKFIOldLhOMMYuu3e7s`,
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTRlMTFkNTdlNGQzMTQ0MGQxMjkzOTMiLCJpYXQiOjE3MDAzMzYzNjEsImV4cCI6MTcwMDU5NTU2MX0.45TVYG5kS0a-RElnSGenlvL48huc0O0vaTqxEyqsyvk`,
         },
         body: JSON.stringify(user_text),
       });
@@ -64,12 +47,6 @@ export const RecommendrAssesmentProvider = ({
     } catch (error) {
       console.error("Error:", error);
     }
-
-    // localStorage.removeItem("userData");
-    // localStorage.removeItem("finalData");
-    // localStorage.removeItem("currentPage");
-    // setUserData([]);
-    // setCurrentPage(0);
   };
 
   return (
