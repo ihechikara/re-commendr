@@ -39,7 +39,7 @@ export const RecommendrAssesmentProvider = ({
     setLoading(true);
     console.log(user_text, userData);
     try {
-      const response = await fetch("http://localhost:3000/api/recommend/", {
+      const response = await fetch("http://localhost:5000/api/recommend/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
