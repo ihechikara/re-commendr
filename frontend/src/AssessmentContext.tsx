@@ -38,7 +38,6 @@ export const RecommendrAssesmentProvider = ({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTRlMTFkNTdlNGQzMTQ0MGQxMjkzOTMiLCJpYXQiOjE3MDAzMzYzNjEsImV4cCI6MTcwMDU5NTU2MX0.45TVYG5kS0a-RElnSGenlvL48huc0O0vaTqxEyqsyvk`,
         },
         body: JSON.stringify(user_text),
       });
