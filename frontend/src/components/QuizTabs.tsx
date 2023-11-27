@@ -1,9 +1,8 @@
-import { useState, useContext } from "react";
+import {  useContext } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Header from "../common/Header";
 import TechnicalAssessmentQuiz from "./quiz/TechnicalAssessmentQuiz";
 import PriorProgrammingQuiz from "./quiz/PriorProgrammingQuiz";
 import InterestQuiz from "./quiz/InterestQuiz";
@@ -12,8 +11,6 @@ import LearningStyle from "./quiz/LearningStyle";
 import IntendedProject from "./quiz/IntendedProject";
 import TimeAvailability from "./quiz/TimeAvailability";
 import { RecommendrAssesmentContext } from "../AssessmentContext";
-import { Button } from "@mui/material";
-
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -47,8 +44,6 @@ function a11yProps(index: number) {
   };
 }
 
-const totalTabs = 7;
-
 export default function QuizTabs() {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     quizContext?.setCurrentPage(newValue); // update the current page in your context
@@ -58,7 +53,6 @@ export default function QuizTabs() {
 
   return (
     <Box>
-      <Header />
       <Box
         sx={{
           mt: "120px",

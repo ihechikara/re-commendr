@@ -27,7 +27,10 @@ const Header = () => {
         gap: "316px",
       }}
     >
-      <Box component="img" alt="" src={logo}></Box>
+      <Link to="/" style={LinkStyles}>
+        <img alt="" src={logo} />
+      </Link>
+
       <Box
         sx={{
           display: "flex",
@@ -39,9 +42,9 @@ const Header = () => {
         <Link to="/" style={LinkStyles}>
           Home
         </Link>
-        <a style={LinkStyles} onClick={onShow}>
+        <p style={LinkStyles} onClick={onShow}>
           How it works
-        </a>
+        </p>
         {show && <HowItWorks setShow={setShow} />}
         <Link to="/disclaimer" style={LinkStyles}>
           Start recommender

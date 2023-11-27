@@ -1,4 +1,3 @@
-// AssessmentContext.js
 import React, { useState, ReactNode } from "react";
 
 export interface IRecommendrAssesmentContext {
@@ -9,6 +8,10 @@ export interface IRecommendrAssesmentContext {
   currentPage: any;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   submitData: any;
+  loading: any;
+  setLoading: any;
+  result: any;
+  setResult: any;
 }
 
 export const RecommendrAssesmentContext =
@@ -24,14 +27,16 @@ export const RecommendrAssesmentProvider = ({
   const [userData, setUserData] = useState<any>([]);
   const [finalData, setFinalData] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState("");
 
   const user_text = {
     user_text: `Generate a detailed learning roadmap for a user with ${userData.algorithmicThinking} algorithmic thinking, ${userData.logicalThinking} logical thinking, and ${userData.mathematicalReasoning} mathematical reasoning, and is a ${userData.programmingExperienceLevel} to programming. The user wants to learn ${userData.programmingLanguages} with these learning objectives: ${userData.learningObjectives}. The user intends to learn with ${userData.learningPace} and prefers ${userData.learningContent}, and intends to build a ${userData.intendedProject}. The user’s availability to learn ${userData.availability}.`,
   };
 
-
   const submitData = async () => {
     // setFinalData((finalData: any) => [...finalData, userData]);
+    setLoading(true);
     console.log(user_text, userData);
     try {
       const response = await fetch("http://localhost:3000/api/recommend/", {
@@ -41,8 +46,11 @@ export const RecommendrAssesmentProvider = ({
         },
         body: JSON.stringify(user_text),
       });
+      setUserData({});
       const responseData = await response.json();
-      console.log(responseData);
+      setResult(responseData);
+      console.log(responseData, "response_data");
+      setLoading(false);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -58,6 +66,10 @@ export const RecommendrAssesmentProvider = ({
         currentPage,
         setCurrentPage,
         submitData,
+        loading,
+        setLoading,
+        result,
+        setResult,
       }}
     >
       {children}

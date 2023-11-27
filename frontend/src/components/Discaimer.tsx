@@ -1,11 +1,10 @@
 import { Box, Typography } from "@mui/material";
-import Header from "../common/Header";
 import { Link } from "react-router-dom";
 
 const Discaimer = () => {
   return (
     <Box sx={{ height: "calc(100vh - 90px)", width: "100vw" }}>
-      <Header />
+      
       <Box
         sx={{
           mt: "120px",
