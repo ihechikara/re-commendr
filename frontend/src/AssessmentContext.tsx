@@ -31,7 +31,7 @@ export const RecommendrAssesmentProvider = ({
   const [result, setResult] = useState("");
 
   const user_text = {
-    user_text: `Generate a detailed learning roadmap for a user with ${userData.algorithmicThinking} algorithmic thinking, ${userData.logicalThinking} logical thinking, and ${userData.mathematicalReasoning} mathematical reasoning, and is a ${userData.programmingExperienceLevel} to programming. The user wants to learn ${userData.programmingLanguages} with these learning objectives: ${userData.learningObjectives}. The user intends to learn with ${userData.learningPace} and prefers ${userData.learningContent}, and intends to build a ${userData.intendedProject}. The user’s availability to learn ${userData.availability}.`,
+    user_text: `Generate a detailed learning roadmap for a user with ${userData.algorithmicThinking} algorithmic thinking, ${userData.logicalThinking} logical thinking, and ${userData.mathematicalReasoning} mathematical reasoning, and is a ${userData.programmingExperienceLevel} to programming. The user wants to learn ${userData.programmingLanguages} with these learning objectives: ${userData.learningObjectives}. The user intends to learn with ${userData.learningPace} and prefers ${userData.learningContent}, and intends to build a ${userData.intendedProject}. The user’s availability to learn ${userData.availability}. Break down your respnse into 12 weeks and also include resources for each week`,
   };
 
   const submitData = async () => {
